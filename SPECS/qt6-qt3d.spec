@@ -9,7 +9,7 @@
 Summary: Qt6 - Qt3D QML bindings and C++ APIs
 Name:    qt6-%{qt_module}
 Version: 6.10.1
-Release: 1%{?dist}
+Release: 1%{?dist}.1
 
 %global examples 1
 %global build_tests 1
@@ -27,6 +27,10 @@ Source0: https://download.qt.io/official_releases/qt/%{majmin}/%{version}/submod
 Source1: qt3dcore-config-multilib_p.h
 
 Patch0:  qt3d-assimp-fix-build.patch
+
+# CVE-2026-111487
+# https://github.com/qt/qt3d/commit/1eefe29327c5d7dd6020c5dd0735eb8e5e798f05
+Patch1:  qt3d-assimp-plugin-handle-morph-targets-with-mixed-attributes.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -265,6 +269,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 05 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 6.10.1-1.1
+- CVE-2026-111487 qt6-qt3d: qt: arbitrary code execution via out-of-bounds write in Qt3D assimp plugin
+  Resolves: RHEL-301961
+
 * Mon Nov 24 2025 Jan Grulich <jgrulich@redhat.com> - 6.10.1-1
 - 6.10.1
   Resolves: RHEL-109197
